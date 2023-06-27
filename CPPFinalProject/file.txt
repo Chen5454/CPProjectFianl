@@ -1,0 +1,18 @@
+{
+  "crops": [
+    {
+      "name": "CropA",
+      "temperature": 25.5,
+      "humidity": 70.2,
+      "soil_moisture": 45.8,
+      "light_intensity": 1200.0
+    },
+    {
+      "name": "CropB",
+      "temperature": 28.0,
+      "humidity": 65.5,
+      "soil_moisture": 50.2,
+      "light_intensity": 1000.0
+    }
+  ]
+}
