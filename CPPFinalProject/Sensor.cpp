@@ -29,7 +29,7 @@ public:
         lightIntensity = intensity;
     }
 
-    void printData() const {
+    void printData()  {
         std::cout << "Sensor: " << sensorName << std::endl;
         std::cout << "Temperature: " << temperature << "°C" << std::endl;
         std::cout << "Humidity: " << humidity << "%" << std::endl;
