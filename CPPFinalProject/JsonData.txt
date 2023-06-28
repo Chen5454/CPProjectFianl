@@ -1,5 +1,5 @@
 {
-  "crops": [
+  "Agriculture Sensor": [
     {
       "name": "CropA",
       "temperature": 25.5,
