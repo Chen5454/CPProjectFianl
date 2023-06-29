@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dashboard.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sensor.cpp" />
   </ItemGroup>
@@ -135,6 +136,10 @@
     <ClInclude Include="Dashboard.h" />
     <ClInclude Include="FileHandler.h" />
     <ClInclude Include="Sensor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Commands.txt" />
+    <Text Include="JsonData.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
