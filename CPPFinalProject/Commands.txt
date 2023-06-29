@@ -1,0 +1,4 @@
+SensorType(Agricultural Sensor):Temp(12.5):Hum(54):Moist(25.5):Light(12.8):Crop(Name)
+
+
+
