@@ -79,9 +79,11 @@ void AgriculturalSensor::inputReader()
 
 void AgriculturalSensor::printData()
 {
+	std::cout << "Displaying Recent Data"<< std::endl;
 	std::cout << "Sensor: " << sensorName << std::endl;
 	std::cout << "Temperature: " << temperature << "°C" << std::endl;
 	std::cout << "Humidity: " << humidity << "%" << std::endl;
 	std::cout << "Soil Moisture: " << soilMoisture << "%" << std::endl;
 	std::cout << "Light Intensity: " << lightIntensity << " lux" << std::endl;
+	std::cout << "Crop: " << cropName << std::endl;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "Sensor.h"
 
-class AgriculturalSensor : Sensor {
+class AgriculturalSensor : public Sensor {
 private:
     std::string cropName;
     float temperature;

@@ -1,1 +1,2 @@
-SensorType(Agricultural Sensor):Temp(12.5):Hum(54):Moist(25.5):Light(12.8):Crop(Name)
+?SensorName():Temp():Hum():Moist():Light():Crop() ##This Is a Comment to Show The Writing Format##
+SensorName(Agricultural Sensor):Temp(12.5):Hum(54):Moist(25.5):Light(12.8):Crop(Corn)
