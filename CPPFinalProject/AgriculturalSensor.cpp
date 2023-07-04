@@ -73,6 +73,27 @@ void AgriculturalSensor::setData(float temp, float hum, float moisture, float in
 	setCropName(crop);
 }
 
+std::string AgriculturalSensor::getData()
+{
+	//SensorName(Agricultural Sensor):Temp(12.5):Hum(54):Moist(25.5):Light(12.8):Crop(Corn)
+	//{
+	//	"name": '"'CropA',
+	//		"temperature" : 25.5,
+	//		"humidity" : 70.2,
+	//		"soil_moisture" : 45.8,
+	//		"light_intensity" : 1200.0
+	//}
+
+	std::string dataString;
+
+	dataString = "{'Crop' : '" + cropName + "' , 'Temperature' : " + std::to_string(temperature) + " , 'Humidity' : " + std::to_string(humidity) +
+		" , 'Moisture' : " + std::to_string(soilMoisture) + " , 'Light' :" + std::to_string(lightIntensity) + "},";
+
+
+	
+	return dataString;
+}
+
 void AgriculturalSensor::inputReader()
 {
 }

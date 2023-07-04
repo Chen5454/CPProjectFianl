@@ -1,6 +1,7 @@
 #include <iostream>
 #include "FileHandler.h"
 #include "AgriculturalSensor.h"
+#include "DatabaseManager.h"
 using namespace std;
 
 int main() {
@@ -10,6 +11,12 @@ int main() {
 	AgriculturalSensor ags("Agricultural Sensor");
 
 	AgriculturalSensor* pAgs = &ags;
+
+	DatabaseManager dbm ;
+
+	DatabaseManager* pdbm = &dbm;
+
+	fh.GetDatabase(pdbm);
 
 	fh.RegisterSensor(pAgs);
 
