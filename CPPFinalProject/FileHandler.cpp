@@ -17,7 +17,7 @@ void FileHandler::GetCommands()
 	if (newFile.is_open()) {
 
 		std::string input;
-		database_manager->JsonOrganizer(false);
+		database_manager->JsonAddSimpleData("[");
 		while (std::getline(newFile, input))
 		{
 			bool gotKeyword = false;
@@ -98,11 +98,17 @@ void FileHandler::GetCommands()
 			if(currentSensor!=NULL)
 			{
 				database_manager->writeData(currentSensor->GetName(), currentSensor->getData());
-
+				if (!newFile.eof())
+				{
+					database_manager->JsonAddSimpleData(",\n");
+				}
+				else
+				{
+					database_manager->JsonAddSimpleData("\n");
+				}
 			}
-
 		}
-		database_manager->JsonOrganizer(true);
+		database_manager->JsonAddSimpleData("]");
 		newFile.close();
 	}
 }

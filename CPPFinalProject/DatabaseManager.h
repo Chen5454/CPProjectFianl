@@ -16,5 +16,5 @@ public:
 
 	DatabaseManager();
 	void writeData(std::string sensorName,std::string data);
-	void JsonOrganizer(bool isEnd);
+	void JsonAddSimpleData(std::string simpleData);
 };

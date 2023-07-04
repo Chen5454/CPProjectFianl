@@ -17,15 +17,8 @@ void DatabaseManager::writeData(std::string sensorName, std::string data)
 	dataFile << data;
 }
 
-void DatabaseManager::JsonOrganizer(bool isEnd)
+void DatabaseManager::JsonAddSimpleData(std::string simpleData)
 {
-	if (!isEnd)
-	{
-		dataFile << "[";
-	}
-	else
-	{
-		dataFile << "]";
-	}
+	dataFile << simpleData;
 }
 	

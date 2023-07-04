@@ -86,11 +86,13 @@ std::string AgriculturalSensor::getData()
 
 	std::string dataString;
 
-	dataString = "{'Crop' : '" + cropName + "' , 'Temperature' : " + std::to_string(temperature) + " , 'Humidity' : " + std::to_string(humidity) +
-		" , 'Moisture' : " + std::to_string(soilMoisture) + " , 'Light' :" + std::to_string(lightIntensity) + "},";
+	dataString = "\n{\"Crop\" : \"" + cropName + "\" , \n";
+	dataString += "\"Temperature\" : " + std::to_string(temperature) + " , \n";
+	dataString += "\"Humidity\" : " + std::to_string(humidity) + " , \n";
+	dataString += "\"Moisture\" : " + std::to_string(soilMoisture) + " , \n";
+	dataString += "\"Light\" :" + std::to_string(lightIntensity) + "}";
 
 
-	
 	return dataString;
 }
 
@@ -100,7 +102,7 @@ void AgriculturalSensor::inputReader()
 
 void AgriculturalSensor::printData()
 {
-	std::cout << "Displaying Recent Data"<< std::endl;
+	std::cout << "Displaying Recent Data" << std::endl;
 	std::cout << "Sensor: " << sensorName << std::endl;
 	std::cout << "Temperature: " << temperature << "°C" << std::endl;
 	std::cout << "Humidity: " << humidity << "%" << std::endl;
