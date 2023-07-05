@@ -1,18 +1,15 @@
-{
-  "Agriculture Sensor": [
-    {
-      "name": "CropA",
-      "temperature": 25.5,
-      "humidity": 70.2,
-      "soil_moisture": 45.8,
-      "light_intensity": 1200.0
-    },
-    {
-      "name": "CropB",
-      "temperature": 28.0,
-      "humidity": 65.5,
-      "soil_moisture": 50.2,
-      "light_intensity": 1000.0
-    }
-  ]
-}
+[
+{"Sensor Name" : "Agricultural Sensor" , 
+"Crop" : "Corn" , 
+"Temperature" : 12.000000 , 
+"Humidity" : 54.000000 , 
+"Moisture" : 25.000000 , 
+"Light" :12.000000},
+
+{"Sensor Name" : "Agricultural Sensor" , 
+"Crop" : "Berries" , 
+"Temperature" : -5.000000 , 
+"Humidity" : 50.000000 , 
+"Moisture" : 80.000000 , 
+"Light" :7.000000}
+]

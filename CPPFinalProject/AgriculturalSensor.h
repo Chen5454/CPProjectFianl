@@ -28,6 +28,8 @@ public:
 
     void setData(float temp, float hum, float moisture, float intensity, std::string crop);
 
+    std::string getData();
+
     void inputReader();
 
     void printData();
