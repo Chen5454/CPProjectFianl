@@ -1,83 +1,101 @@
 #include "Dashboard.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
-void Dashboard::parseData(const std::string& filename)
+void Dashboard::parseData()
 {
-    std::ifstream file(filename);
+    std::ifstream file("JsonData.txt");
+
     if (file.is_open()) {
-        std::string str;
-        char c;
-        while (file.get(c)) {
-            str += c;
+        crops.clear();
+
+        Crop crop;
+        std::string key;
+        std::string valueString;
+        bool isValue = false;
+        bool isNegative = false;
+        char currentChar;
+        int level = 0;
+
+        while (file.get(currentChar)) {
+            switch (currentChar) {
+            case '{':
+            case '[':
+                level++;
+                break;
+            case '}':
+            case ']':
+            case ',':
+                if (!valueString.empty()) {
+                    if (key == "Crop") {
+                        crop.cropName = valueString;
+                    }
+                    else if (key == "Temperature") {
+                        crop.temperature = std::stof(valueString);
+                    }
+                    else if (key == "Humidity") {
+                        crop.humidity = std::stof(valueString);
+                    }
+                    else if (key == "Moisture") {
+                        crop.soilMoisture = std::stof(valueString);
+                    }
+                    else if (key == "Light") {
+                        crop.lightIntensity = std::stof(valueString);
+                    }
+                    key.clear();
+                    isValue = false;
+                    valueString.clear();
+                }
+                if (currentChar == '}' || currentChar == ']') {
+                    level--;
+                    if (level == 1) { // If we are at the top level, add crop to crops list
+                        crops.push_back(crop);
+                        crop = Crop(); // Clear the current crop 
+                    }
+                }
+                break;
+            case '\"':
+                // Read the key
+                key.clear();
+                while (file.get(currentChar) && currentChar != '\"') {
+                    key.push_back(currentChar);
+                }
+                break;
+            case ':':
+                // value after ':'
+                isValue = true;
+                valueString.clear();
+                break;
+            case '-':
+                // Negative sign 
+                isNegative = true;
+                valueString.push_back(currentChar);
+                break;
+            default:
+                // Read a number value
+                if (isdigit(currentChar) || currentChar == '.') {
+                    valueString.push_back(currentChar);
+                }
+                break;
+            }
         }
 
         file.close();
+        for (const auto& crop : crops)
+        {
+            std::cout << "Crop: " << crop.cropName   << std::endl;
+            std::cout << "Temperature: " << crop.temperature << "C" << std::endl;;
+            std::cout << "Humidity: " << crop.humidity << "%" << std::endl;
+            std::cout << "Soil Moisture: " << crop.soilMoisture << "%" << std::endl;
+            std::cout << "Light Intensity: " << crop.lightIntensity << " lux" << std::endl;
 
-        size_t cropsStart = str.find("Agricultural Sensor");
-        if (cropsStart != std::string::npos) {
-            size_t cropsArrayStart = str.find('[', cropsStart);
-            size_t cropsArrayEnd = str.find(']', cropsStart);
-            if (cropsArrayStart != std::string::npos && cropsArrayEnd != std::string::npos) {
-                std::string cropsData = str.substr(cropsArrayStart, cropsArrayEnd - cropsArrayStart + 1);
-
-                size_t cropStart = cropsData.find('{');
-                while (cropStart != std::string::npos) {
-                    size_t cropEnd = cropsData.find('}', cropStart);
-                    if (cropEnd != std::string::npos) {
-                        std::string cropData = cropsData.substr(cropStart, cropEnd - cropStart + 1);
-                        Crop crop;
-
-                        size_t nameStart = cropData.find("name");
-                        if (nameStart != std::string::npos) {
-                            size_t nameValueStart = cropData.find(':', nameStart);
-                            size_t nameValueEnd = cropData.find('\'', nameValueStart + 1);
-                            if (nameValueStart != std::string::npos && nameValueEnd != std::string::npos) {
-                                crop.name = cropData.substr(nameValueStart + 1, nameValueEnd - nameValueStart - 1);
-                            }
-                        }
-
-                        size_t temperatureStart = cropData.find("temperature");
-                        if (temperatureStart != std::string::npos) {
-                            size_t temperatureValueStart = cropData.find(':', temperatureStart);
-                            if (temperatureValueStart != std::string::npos) {
-                                crop.temperature = std::stof(cropData.substr(temperatureValueStart + 1));
-                            }
-                        }
-
-                        size_t humidityStart = cropData.find("humidity");
-                        if (humidityStart != std::string::npos) {
-                            size_t humidityValueStart = cropData.find(':', humidityStart);
-                            if (humidityValueStart != std::string::npos) {
-                                crop.humidity = std::stof(cropData.substr(humidityValueStart + 1));
-                            }
-                        }
-
-                        size_t soilMoistureStart = cropData.find("soil_moisture");
-                        if (soilMoistureStart != std::string::npos) {
-                            size_t soilMoistureValueStart = cropData.find(':', soilMoistureStart);
-                            if (soilMoistureValueStart != std::string::npos) {
-                                crop.soilMoisture = std::stof(cropData.substr(soilMoistureValueStart + 1));
-                            }
-                        }
-
-                        size_t lightIntensityStart = cropData.find("light_intensity");
-                        if (lightIntensityStart != std::string::npos) {
-                            size_t lightIntensityValueStart = cropData.find(':', lightIntensityStart);
-                            if (lightIntensityValueStart != std::string::npos) {
-                                crop.lightIntensity = std::stof(cropData.substr(lightIntensityValueStart + 1));
-                            }
-                        }
-
-                        crops.push_back(crop);
-                        cropStart = cropsData.find('{', cropEnd);
-                    }
-                    else {
-                        cropStart = std::string::npos;
-                    }
-                }
-            }
+            std::cout << std::endl;
         }
     }
-    else {
+    else
+    {
         std::cout << "Error: Failed to open file." << std::endl;
     }
 }

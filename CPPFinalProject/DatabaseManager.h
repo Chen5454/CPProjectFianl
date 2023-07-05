@@ -15,6 +15,7 @@ private:
 public:
 
 	DatabaseManager();
-	void writeData(std::string sensorName,std::string data);
+	void writeData(std::string data);
 	void JsonAddSimpleData(std::string simpleData);
+	void ClosedFile();
 };

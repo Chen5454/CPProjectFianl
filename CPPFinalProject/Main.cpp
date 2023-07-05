@@ -2,6 +2,7 @@
 #include "FileHandler.h"
 #include "AgriculturalSensor.h"
 #include "DatabaseManager.h"
+#include "Dashboard.h"
 using namespace std;
 
 int main() {
@@ -16,6 +17,9 @@ int main() {
 
 	DatabaseManager* pdbm = &dbm;
 
+	Dashboard dashboard;
+
+
 	fh.GetDatabase(pdbm);
 
 	fh.RegisterSensor(pAgs);
@@ -24,7 +28,7 @@ int main() {
 
 	cout << endl;
 
-	ags.printData();
+	dashboard.parseData();
 
 	return 0;
 }

@@ -60,7 +60,7 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					std::cout << tempKeyWord << " , " << tempValWord << std::endl;
+					//std::cout << tempKeyWord << " , " << tempValWord << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
@@ -87,7 +87,7 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					std::cout << tempKeyWord << " , " << tempValWord << std::endl << std::endl;
+					//std::cout << tempKeyWord << " , " << tempValWord << std::endl << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
@@ -97,7 +97,7 @@ void FileHandler::GetCommands()
 
 			if(currentSensor!=NULL)
 			{
-				database_manager->writeData(currentSensor->GetName(), currentSensor->getData());
+				database_manager->writeData(currentSensor->getData());
 				if (!newFile.eof())
 				{
 					database_manager->JsonAddSimpleData(",\n");
@@ -109,6 +109,7 @@ void FileHandler::GetCommands()
 			}
 		}
 		database_manager->JsonAddSimpleData("]");
+		database_manager->ClosedFile();
 		newFile.close();
 	}
 }

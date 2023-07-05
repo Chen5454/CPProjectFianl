@@ -6,7 +6,7 @@
 class Dashboard {
 private:
     struct Crop {
-        std::string name;
+        std::string cropName;
         float temperature;
         float humidity;
         float soilMoisture;
@@ -15,6 +15,7 @@ private:
 
     std::vector<Crop> crops;
 
+
 public:
-    void parseData(const std::string& filename);
+    void parseData();
 };
