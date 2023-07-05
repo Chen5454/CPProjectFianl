@@ -17,16 +17,16 @@ void FileHandler::GetCommands()
 	if (newFile.is_open()) {
 
 		std::string input;
-
+		database_manager->JsonAddSimpleData("[");
 		while (std::getline(newFile, input))
 		{
 			bool gotKeyword = false;
 			std::string tempKeyWord, tempValWord;
-			//Sensor* currentSensor = nullptr;
 			AgriculturalSensor* currentSensor = nullptr;
 
 			for (int i = 0; i < input.length(); i++)
 			{
+
 				if (input[i] == '?')
 				{
 					break;
@@ -60,7 +60,7 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					std::cout << tempKeyWord << " , " << tempValWord << std::endl;
+					//std::cout << tempKeyWord << " , " << tempValWord << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
@@ -87,16 +87,29 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					std::cout << tempKeyWord << " , " << tempValWord << std::endl << std::endl;
+					//std::cout << tempKeyWord << " , " << tempValWord << std::endl << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
 				}
+
+			}
+
+			if(currentSensor!=NULL)
+			{
+				database_manager->writeData(currentSensor->getData());
+				if (!newFile.eof())
+				{
+					database_manager->JsonAddSimpleData(",\n");
+				}
+				else
+				{
+					database_manager->JsonAddSimpleData("\n");
+				}
 			}
 		}
-
-
-
+		database_manager->JsonAddSimpleData("]");
+		database_manager->ClosedFile();
 		newFile.close();
 	}
 }
@@ -104,6 +117,11 @@ void FileHandler::GetCommands()
 void FileHandler::RegisterSensor(AgriculturalSensor* newSensor)
 {
 	registeredSensors.push_back(newSensor);
+}
+
+void FileHandler::GetDatabase(DatabaseManager* database)
+{
+	database_manager = database;
 }
 
 std::string FileHandler::NumTranslate(std::string input) const

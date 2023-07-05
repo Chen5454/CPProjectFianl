@@ -73,13 +73,28 @@ void AgriculturalSensor::setData(float temp, float hum, float moisture, float in
 	setCropName(crop);
 }
 
+std::string AgriculturalSensor::getData()
+{
+	std::string dataString;
+
+	dataString = "\n{\"Sensor Name\" : \"" + sensorName + "\" , \n";
+	dataString += "\"Crop\" : \"" + cropName + "\" , \n";
+	dataString += "\"Temperature\" : " + std::to_string(temperature) + " , \n";
+	dataString += "\"Humidity\" : " + std::to_string(humidity) + " , \n";
+	dataString += "\"Moisture\" : " + std::to_string(soilMoisture) + " , \n";
+	dataString += "\"Light\" :" + std::to_string(lightIntensity) + "}";
+
+
+	return dataString;
+}
+
 void AgriculturalSensor::inputReader()
 {
 }
 
 void AgriculturalSensor::printData()
 {
-	std::cout << "Displaying Recent Data"<< std::endl;
+	std::cout << "Displaying Recent Data" << std::endl;
 	std::cout << "Sensor: " << sensorName << std::endl;
 	std::cout << "Temperature: " << temperature << "°C" << std::endl;
 	std::cout << "Humidity: " << humidity << "%" << std::endl;

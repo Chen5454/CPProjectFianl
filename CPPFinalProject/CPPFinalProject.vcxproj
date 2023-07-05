@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClCompile Include="AgriculturalSensor.cpp" />
     <ClCompile Include="Dashboard.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgriculturalSensor.h" />
     <ClInclude Include="Dashboard.h" />
+    <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="FileHandler.h" />
     <ClInclude Include="Sensor.h" />
   </ItemGroup>
