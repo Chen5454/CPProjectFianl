@@ -3,10 +3,10 @@
 
 DatabaseManager::DatabaseManager()
 {
-	getFile();
+	GetFile();
 }
 
-void DatabaseManager::getFile()
+void DatabaseManager::GetFile()
 {
 	std::fstream FILE("JsonData.txt");
 	dataFile.open("JsonData.txt",std::ios::out);
