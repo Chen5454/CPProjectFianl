@@ -24,11 +24,14 @@ int main() {
 
 	fh.RegisterSensor(pAgs);
 
+	fh.UserInput();
+
 	fh.GetCommands();
 
 	cout << endl;
 
 	dashboard.parseData();
+
 
 	return 0;
 }

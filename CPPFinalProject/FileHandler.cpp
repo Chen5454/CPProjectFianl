@@ -14,6 +14,7 @@ void FileHandler::GetFile()
 
 void FileHandler::GetCommands()
 {
+	GetFile();
 	if (newFile.is_open()) {
 
 		std::string input;
@@ -95,7 +96,7 @@ void FileHandler::GetCommands()
 
 			}
 
-			if(currentSensor!=NULL)
+			if (currentSensor != NULL)
 			{
 				database_manager->writeData(currentSensor->getData());
 				if (!newFile.eof())
@@ -114,6 +115,17 @@ void FileHandler::GetCommands()
 	}
 }
 
+void FileHandler::AddCommand(std::string fullInput)
+{
+	std::fstream FILE("Commands.txt");
+	newFile.open("Commands.txt", std::ios::app);
+	if (newFile.is_open())
+	{
+		newFile << "\n" << fullInput;
+		newFile.close();
+	}
+}
+
 void FileHandler::RegisterSensor(AgriculturalSensor* newSensor)
 {
 	registeredSensors.push_back(newSensor);
@@ -122,6 +134,49 @@ void FileHandler::RegisterSensor(AgriculturalSensor* newSensor)
 void FileHandler::GetDatabase(DatabaseManager* database)
 {
 	database_manager = database;
+}
+
+void FileHandler::UserInput()
+{
+	while (isInputing)
+	{
+		std::cout << "Add Another Sensor Data? (y/n): ";
+		char answ;
+		std::cin >> answ;
+
+		if (answ == 'y')
+		{
+			std::string fullInput;
+			std::string temperature;
+			std::string humidity;
+			std::string moisture;
+			std::string light;
+			std::string crop;
+
+			std::cout << "Temperature: ";
+			std::cin >> temperature;
+
+			std::cout << "Humidity: ";
+			std::cin >> humidity;
+
+			std::cout << "Moisture: ";
+			std::cin >> moisture;
+
+			std::cout << "Light: ";
+			std::cin >> light;
+
+			std::cout << "Crop: ";
+			std::cin >> crop;
+
+			fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
+
+			AddCommand(fullInput);
+		}
+		else if (answ == 'n')
+		{
+			isInputing = false;
+		}
+	}
 }
 
 std::string FileHandler::NumTranslate(std::string input) const
