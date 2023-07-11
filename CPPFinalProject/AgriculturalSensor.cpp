@@ -88,10 +88,6 @@ std::string AgriculturalSensor::getData()
 	return dataString;
 }
 
-void AgriculturalSensor::inputReader()
-{
-}
-
 void AgriculturalSensor::printData()
 {
 	std::cout << "Displaying Recent Data" << std::endl;

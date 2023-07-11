@@ -93,7 +93,7 @@ void Dashboard::parseData()
 		}
 
 		file.close();
-		for (const auto& crop : crops)
+		for (const auto& crop : crops) // Displaying the Data from the JSON to the CMD
 		{
 			std::cout << "Crop: " << crop.cropName << std::endl;
 			std::cout << "Temperature: " << crop.temperature << "C" << std::endl;;
