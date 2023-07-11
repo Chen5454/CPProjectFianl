@@ -8,8 +8,9 @@ FileHandler::FileHandler()
 
 void FileHandler::GetFile()
 {
-	std::fstream FILE("Commands.txt");
-	newFile.open("Commands.txt");
+	newFile.open("Commands.txt", std::ios::in | std::ios::out | std::ios::app);
+	if (!newFile.is_open()) 
+		std::cerr << "Failed to open file: Commands.txt" << std::endl;
 }
 
 void FileHandler::GetCommands()
@@ -117,12 +118,9 @@ void FileHandler::GetCommands()
 
 void FileHandler::AddCommand(std::string fullInput)
 {
-	std::fstream FILE("Commands.txt");
-	newFile.open("Commands.txt", std::ios::app);
 	if (newFile.is_open())
 	{
 		newFile << "\n" << fullInput;
-		newFile.close();
 	}
 }
 
@@ -146,6 +144,7 @@ void FileHandler::UserInput()
 
 		if (answ == 'y')
 		{
+			bool isValid = true;
 			std::string fullInput;
 			std::string temperature;
 			std::string humidity;
@@ -153,27 +152,50 @@ void FileHandler::UserInput()
 			std::string light;
 			std::string crop;
 
-			std::cout << "Temperature: ";
-			std::cin >> temperature;
+		
+				std::cout << "Temperature: ";
+				std::cin >> temperature;
+				isValid = CheckIfNum(temperature) ? true : false;
 
-			std::cout << "Humidity: ";
-			std::cin >> humidity;
+			if (isValid)
+			{
+				std::cout << "Humidity: ";
+				std::cin >> humidity;
+				isValid = CheckIfNum(humidity) ? true : false;
+			}
+			if (isValid)
+			{
+				std::cout << "Moisture: ";
+				std::cin >> moisture;
+				isValid = CheckIfNum(moisture) ? true : false;
+			}
+			if (isValid)
+			{
+				std::cout << "Light: ";
+				std::cin >> light;
+				isValid = CheckIfNum(light) ? true : false;
+			}
+			if (isValid)
+			{
+				std::cout << "Crop: ";
+				std::cin >> crop;
+				isValid = !CheckIfNum(crop) ? true : false;
 
-			std::cout << "Moisture: ";
-			std::cin >> moisture;
+			}
 
-			std::cout << "Light: ";
-			std::cin >> light;
+			if(isValid)
+			{
+				fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
+				AddCommand(fullInput);
+			}
+		
 
-			std::cout << "Crop: ";
-			std::cin >> crop;
-
-			fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
-
-			AddCommand(fullInput);
+			else
+				std::cout << "Invalid input try again \n";
 		}
 		else if (answ == 'n')
 		{
+			newFile.close();
 			isInputing = false;
 		}
 	}
