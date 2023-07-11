@@ -10,7 +10,6 @@ class DatabaseManager
 private:
 	std::fstream dataFile;
 
-	void getFile();
 
 public:
 
@@ -18,4 +17,6 @@ public:
 	void writeData(std::string data);
 	void JsonAddSimpleData(std::string simpleData);
 	void ClosedFile();
+	void GetFile();
+
 };

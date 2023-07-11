@@ -12,8 +12,10 @@ public:
 	FileHandler();
 	void GetFile();
 	void GetCommands();
+	void AddCommand(std::string fullInput);
 	void RegisterSensor(AgriculturalSensor* newSensor);
 	void GetDatabase(DatabaseManager* database);
+	void UserInput();
 
 private:
 	std::fstream newFile;
@@ -22,4 +24,5 @@ private:
 
 	std::string NumTranslate(std::string input) const;
 	bool CheckIfNum(std::string input) const;
+	bool isInputing = true;
 };
