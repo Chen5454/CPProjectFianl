@@ -9,10 +9,11 @@ FileHandler::FileHandler()
 void FileHandler::GetFile()
 {
 	newFile.open("Commands.txt", std::ios::in | std::ios::out | std::ios::app);
-	if (!newFile.is_open()) 
+	if (!newFile.is_open())
 		std::cerr << "Failed to open file: Commands.txt" << std::endl;
 }
 
+// Gets the Commands from the Commands.txt
 void FileHandler::GetCommands()
 {
 	GetFile();
@@ -29,17 +30,17 @@ void FileHandler::GetCommands()
 			for (int i = 0; i < input.length(); i++)
 			{
 
-				if (input[i] == '?')
+				if (input[i] == '?') // If a Line got this then it's a Comment and skips over it.
 				{
 					break;
 				}
 
-				if (input[i] == '(')
+				if (input[i] == '(') // States that it got the Keyword and now will get the Value.
 				{
 					gotKeyword = true;
 					continue;
 				}
-				else if (input[i] == ')')
+				else if (input[i] == ')') // Finished getting the Value.
 				{
 					for (int i = 0; i < registeredSensors.size(); i++)
 					{
@@ -50,7 +51,7 @@ void FileHandler::GetCommands()
 					}
 					continue;
 				}
-				else if (input[i] == ':')
+				else if (input[i] == ':') // Got Key & Value, Sets the info into the Sensor.
 				{
 					if (CheckIfNum(tempValWord))
 					{
@@ -62,7 +63,6 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					//std::cout << tempKeyWord << " , " << tempValWord << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
@@ -77,7 +77,7 @@ void FileHandler::GetCommands()
 					tempValWord += input[i];
 				}
 
-				if (i == input.length() - 2)
+				if (i == input.length() - 2) // Reached EndOfLine, Got Key & Value, Sets the info into the Sensor.
 				{
 					if (CheckIfNum(tempValWord))
 					{
@@ -89,7 +89,6 @@ void FileHandler::GetCommands()
 					}
 
 					gotKeyword = false;
-					//std::cout << tempKeyWord << " , " << tempValWord << std::endl << std::endl;
 					tempKeyWord = "";
 					tempValWord = "";
 					continue;
@@ -99,6 +98,7 @@ void FileHandler::GetCommands()
 
 			if (currentSensor != NULL)
 			{
+				// Writing the Command Input into the JSON DataBase
 				database_manager->writeData(currentSensor->getData());
 				if (!newFile.eof())
 				{
@@ -116,6 +116,7 @@ void FileHandler::GetCommands()
 	}
 }
 
+// Adds Input from User as a Command into Commands.txt
 void FileHandler::AddCommand(std::string fullInput)
 {
 	if (newFile.is_open())
@@ -152,10 +153,10 @@ void FileHandler::UserInput()
 			std::string light;
 			std::string crop;
 
-		
-				std::cout << "Temperature: ";
-				std::cin >> temperature;
-				isValid = CheckIfNum(temperature) ? true : false;
+
+			std::cout << "Temperature: ";
+			std::cin >> temperature;
+			isValid = CheckIfNum(temperature) ? true : false;
 
 			if (isValid)
 			{
@@ -183,15 +184,15 @@ void FileHandler::UserInput()
 
 			}
 
-			if(isValid)
+			if (isValid)
 			{
 				fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
 				AddCommand(fullInput);
 			}
-		
-
 			else
+			{
 				std::cout << "Invalid input try again \n";
+			}
 		}
 		else if (answ == 'n')
 		{

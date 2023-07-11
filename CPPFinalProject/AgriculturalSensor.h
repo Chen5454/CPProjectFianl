@@ -30,7 +30,5 @@ public:
 
     std::string getData();
 
-    void inputReader();
-
     void printData();
 };
