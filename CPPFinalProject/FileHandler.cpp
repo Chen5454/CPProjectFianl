@@ -55,11 +55,11 @@ void FileHandler::GetCommands()
 				{
 					if (CheckIfNum(tempValWord))
 					{
-						currentSensor->setValWithKey(tempKeyWord, std::stoi(tempValWord));
+						currentSensor->setValWithKey(tempKeyWord, std::stof(tempValWord)); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 					else
 					{
-						currentSensor->setValWithKey(tempKeyWord, tempValWord);
+						currentSensor->setValWithKey(tempKeyWord, tempValWord); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 
 					gotKeyword = false;
@@ -81,11 +81,11 @@ void FileHandler::GetCommands()
 				{
 					if (CheckIfNum(tempValWord))
 					{
-						currentSensor->setValWithKey(tempKeyWord, std::stoi(tempValWord));
+						currentSensor->setValWithKey(tempKeyWord, std::stof(tempValWord)); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 					else
 					{
-						currentSensor->setValWithKey(tempKeyWord, tempValWord);
+						currentSensor->setValWithKey(tempKeyWord, tempValWord); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 
 					gotKeyword = false;
