@@ -1,8 +1,1 @@
-[
-{"Sensor Name" : "Agricultural Sensor" , 
-"Crop" : "Gaga" , 
-"Temperature" : 10.000000 , 
-"Humidity" : 10.000000 , 
-"Moisture" : 10.000000 , 
-"Light" :10.000000}
-]
+[]
