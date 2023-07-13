@@ -24,5 +24,6 @@ private:
 
 	std::string NumTranslate(std::string input) const;
 	bool CheckIfNum(std::string input) const;
+	bool CheckPercentage(std::string input) const;
 	bool isInputing = true;
 };

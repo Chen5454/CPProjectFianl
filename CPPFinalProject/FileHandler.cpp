@@ -154,31 +154,39 @@ void FileHandler::UserInput()
 			std::string crop;
 
 
-			std::cout << "Temperature: ";
+			std::cout << "Temperature(c): ";
 			std::cin >> temperature;
 			isValid = CheckIfNum(temperature) ? true : false;
 
 			if (isValid)
 			{
-				std::cout << "Humidity: ";
+				std::cout << "Humidity(%): ";
 				std::cin >> humidity;
 				isValid = CheckIfNum(humidity) ? true : false;
+				if (isValid)
+				{
+					isValid = CheckPercentage(humidity) ? true : false;
+				}
 			}
 			if (isValid)
 			{
-				std::cout << "Moisture: ";
+				std::cout << "Moisture(%): ";
 				std::cin >> moisture;
 				isValid = CheckIfNum(moisture) ? true : false;
+				if (isValid)
+				{
+					isValid = CheckPercentage(moisture) ? true : false;
+				}
 			}
 			if (isValid)
 			{
-				std::cout << "Light: ";
+				std::cout << "Light(lux): ";
 				std::cin >> light;
 				isValid = CheckIfNum(light) ? true : false;
 			}
 			if (isValid)
 			{
-				std::cout << "Crop: ";
+				std::cout << "Crop(name): ";
 				std::cin >> crop;
 				isValid = !CheckIfNum(crop) ? true : false;
 
@@ -228,4 +236,17 @@ bool FileHandler::CheckIfNum(std::string input) const
 		}
 	}
 	return true;
+}
+
+bool FileHandler::CheckPercentage(std::string input) const
+{
+	std::string tempNum = NumTranslate(input);
+	float tempNumF = std::stoi(tempNum);
+
+	if (tempNumF >= 0 && tempNumF <= 100)
+	{
+		return true;
+	}
+
+	return false;
 }
