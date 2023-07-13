@@ -19,6 +19,8 @@ void Dashboard::parseData()
 		char currentChar;
 		int level = 0;
 
+		std::cout << "------------------------------\n";
+
 		while (file.get(currentChar)) {
 			switch (currentChar) {
 			case '{':
@@ -103,6 +105,12 @@ void Dashboard::parseData()
 
 			std::cout << std::endl;
 		}
+		if (crops.size() == 0)
+		{
+			std::cout << "Data List Is Empty!\n";
+		}
+
+		std::cout << "------------------------------\n";
 	}
 	else
 	{

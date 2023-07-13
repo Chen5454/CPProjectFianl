@@ -55,11 +55,11 @@ void FileHandler::GetCommands()
 				{
 					if (CheckIfNum(tempValWord))
 					{
-						currentSensor->setValWithKey(tempKeyWord, std::stoi(tempValWord));
+						currentSensor->setValWithKey(tempKeyWord, std::stof(tempValWord)); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 					else
 					{
-						currentSensor->setValWithKey(tempKeyWord, tempValWord);
+						currentSensor->setValWithKey(tempKeyWord, tempValWord); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 
 					gotKeyword = false;
@@ -81,11 +81,11 @@ void FileHandler::GetCommands()
 				{
 					if (CheckIfNum(tempValWord))
 					{
-						currentSensor->setValWithKey(tempKeyWord, std::stoi(tempValWord));
+						currentSensor->setValWithKey(tempKeyWord, std::stof(tempValWord)); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 					else
 					{
-						currentSensor->setValWithKey(tempKeyWord, tempValWord);
+						currentSensor->setValWithKey(tempKeyWord, tempValWord); // Will set specific Data of CurrentSensor from the Key with passed Value.
 					}
 
 					gotKeyword = false;
@@ -130,6 +130,11 @@ void FileHandler::RegisterSensor(AgriculturalSensor* newSensor)
 	registeredSensors.push_back(newSensor);
 }
 
+void FileHandler::RegisterDashboard(Dashboard* newDashboard)
+{
+	dashboardPointer = newDashboard;
+}
+
 void FileHandler::GetDatabase(DatabaseManager* database)
 {
 	database_manager = database;
@@ -139,11 +144,14 @@ void FileHandler::UserInput()
 {
 	while (isInputing)
 	{
-		std::cout << "Add Another Sensor Data? (y/n): ";
-		char answ;
+		std::cout << std::endl;
+		std::cout << "1. Insert Sensor Data \n2. Display Data \n3. Quit Application\n";
+		std::cout << "Pick An Operation (1/2/3): ";
+		int answ;
 		std::cin >> answ;
+		std::cout << std::endl;
 
-		if (answ == 'y')
+		if (answ == 1)
 		{
 			bool isValid = true;
 			std::string fullInput;
@@ -154,31 +162,39 @@ void FileHandler::UserInput()
 			std::string crop;
 
 
-			std::cout << "Temperature: ";
+			std::cout << "Temperature(c): ";
 			std::cin >> temperature;
 			isValid = CheckIfNum(temperature) ? true : false;
 
 			if (isValid)
 			{
-				std::cout << "Humidity: ";
+				std::cout << "Humidity(%): ";
 				std::cin >> humidity;
 				isValid = CheckIfNum(humidity) ? true : false;
+				if (isValid)
+				{
+					isValid = CheckPercentage(humidity) ? true : false;
+				}
 			}
 			if (isValid)
 			{
-				std::cout << "Moisture: ";
+				std::cout << "Moisture(%): ";
 				std::cin >> moisture;
 				isValid = CheckIfNum(moisture) ? true : false;
+				if (isValid)
+				{
+					isValid = CheckPercentage(moisture) ? true : false;
+				}
 			}
 			if (isValid)
 			{
-				std::cout << "Light: ";
+				std::cout << "Light(lux): ";
 				std::cin >> light;
 				isValid = CheckIfNum(light) ? true : false;
 			}
 			if (isValid)
 			{
-				std::cout << "Crop: ";
+				std::cout << "Crop(name): ";
 				std::cin >> crop;
 				isValid = !CheckIfNum(crop) ? true : false;
 
@@ -188,13 +204,23 @@ void FileHandler::UserInput()
 			{
 				fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
 				AddCommand(fullInput);
+				newFile.close();
+				GetCommands();
+				std::cout << "Data Added Successfully! \n";
 			}
 			else
 			{
-				std::cout << "Invalid input try again \n";
+				std::cout << "Invalid Input Try Again! \n";
 			}
 		}
-		else if (answ == 'n')
+		else if (answ == 2)
+		{
+			newFile.close();
+			GetCommands();
+			std::cout << std::endl;
+			dashboardPointer->parseData();
+		}
+		else if (answ == 3)
 		{
 			newFile.close();
 			isInputing = false;
@@ -228,4 +254,17 @@ bool FileHandler::CheckIfNum(std::string input) const
 		}
 	}
 	return true;
+}
+
+bool FileHandler::CheckPercentage(std::string input) const
+{
+	std::string tempNum = NumTranslate(input);
+	float tempNumF = std::stoi(tempNum);
+
+	if (tempNumF >= 0 && tempNumF <= 100)
+	{
+		return true;
+	}
+
+	return false;
 }

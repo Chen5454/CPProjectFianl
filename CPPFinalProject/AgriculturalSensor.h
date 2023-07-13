@@ -22,7 +22,7 @@ public:
 
     void setCropName(std::string crop);
 
-    void setValWithKey(std::string keyWord, int intVal);
+    void setValWithKey(std::string keyWord, float intVal);
 
     void setValWithKey(std::string keyWord, std::string stringVal);
 

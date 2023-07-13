@@ -36,7 +36,7 @@ void AgriculturalSensor::setCropName(std::string crop)
 	cropName = crop;
 }
 
-void AgriculturalSensor::setValWithKey(std::string keyWord, int intVal)
+void AgriculturalSensor::setValWithKey(std::string keyWord, float intVal)
 {
 	if (keyWord == "Temp")
 	{
