@@ -130,6 +130,11 @@ void FileHandler::RegisterSensor(AgriculturalSensor* newSensor)
 	registeredSensors.push_back(newSensor);
 }
 
+void FileHandler::RegisterDashboard(Dashboard* newDashboard)
+{
+	dashboardPointer = newDashboard;
+}
+
 void FileHandler::GetDatabase(DatabaseManager* database)
 {
 	database_manager = database;
@@ -139,11 +144,14 @@ void FileHandler::UserInput()
 {
 	while (isInputing)
 	{
-		std::cout << "Add Another Sensor Data? (y/n): ";
-		char answ;
+		std::cout << std::endl;
+		std::cout << "1. Insert Sensor Data \n2. Display Data \n3. Quit Application\n";
+		std::cout << "Pick An Operation (1/2/3): ";
+		int answ;
 		std::cin >> answ;
+		std::cout << std::endl;
 
-		if (answ == 'y')
+		if (answ == 1)
 		{
 			bool isValid = true;
 			std::string fullInput;
@@ -196,13 +204,23 @@ void FileHandler::UserInput()
 			{
 				fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
 				AddCommand(fullInput);
+				newFile.close();
+				GetCommands();
+				std::cout << "Data Added Successfully! \n";
 			}
 			else
 			{
-				std::cout << "Invalid input try again \n";
+				std::cout << "Invalid Input Try Again! \n";
 			}
 		}
-		else if (answ == 'n')
+		else if (answ == 2)
+		{
+			newFile.close();
+			GetCommands();
+			std::cout << std::endl;
+			dashboardPointer->parseData();
+		}
+		else if (answ == 3)
 		{
 			newFile.close();
 			isInputing = false;

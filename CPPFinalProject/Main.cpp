@@ -19,18 +19,22 @@ int main() {
 
 	Dashboard dashboard;
 
+	Dashboard* pDashboard = &dashboard;
+
 
 	fh.GetDatabase(pdbm);
 
 	fh.RegisterSensor(pAgs);
 
+	fh.RegisterDashboard(pDashboard);
+
 	fh.UserInput();
 
-	fh.GetCommands();
+	//fh.GetCommands();
 
-	cout << endl;
+	//cout << endl;
 
-	dashboard.parseData();
+	//dashboard.parseData();
 
 
 	return 0;
