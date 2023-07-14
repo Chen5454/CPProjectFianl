@@ -20,7 +20,7 @@ public:
 	void UserInput();
 
 private:
-	std::fstream newFile;
+	std::fstream commandsFile;
 	std::vector<AgriculturalSensor*> registeredSensors;
 	DatabaseManager* database_manager;
 	Dashboard* dashboardPointer;

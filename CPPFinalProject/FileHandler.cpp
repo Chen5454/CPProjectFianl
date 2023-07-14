@@ -8,20 +8,24 @@ FileHandler::FileHandler()
 
 void FileHandler::GetFile()
 {
-	newFile.open("Commands.txt", std::ios::in | std::ios::out | std::ios::app);
-	if (!newFile.is_open())
-		std::cerr << "Failed to open file: Commands.txt" << std::endl;
+	//commandsFile.open("Commands.txt", std::ios::in | std::ios::out | std::ios::app);
+	//if (!commandsFile.is_open())
+	//	std::cerr << "Failed to open file: Commands.txt" << std::endl;
+
+	if (!commandsFile.is_open())
+		commandsFile.open("Commands.txt", std::ios::in | std::ios::out | std::ios::app);
 }
 
 // Gets the Commands from the Commands.txt
 void FileHandler::GetCommands()
 {
 	GetFile();
-	if (newFile.is_open()) {
+	database_manager->GetFile();
+	if (commandsFile.is_open()) {
 
 		std::string input;
 		database_manager->JsonAddSimpleData("[");
-		while (std::getline(newFile, input))
+		while (std::getline(commandsFile, input))
 		{
 			bool gotKeyword = false;
 			std::string tempKeyWord, tempValWord;
@@ -100,7 +104,7 @@ void FileHandler::GetCommands()
 			{
 				// Writing the Command Input into the JSON DataBase
 				database_manager->writeData(currentSensor->getData());
-				if (!newFile.eof())
+				if (!commandsFile.eof())
 				{
 					database_manager->JsonAddSimpleData(",\n");
 				}
@@ -112,16 +116,16 @@ void FileHandler::GetCommands()
 		}
 		database_manager->JsonAddSimpleData("]");
 		database_manager->ClosedFile();
-		newFile.close();
+		commandsFile.close();
 	}
 }
 
 // Adds Input from User as a Command into Commands.txt
 void FileHandler::AddCommand(std::string fullInput)
 {
-	if (newFile.is_open())
+	if (commandsFile.is_open())
 	{
-		newFile << "\n" << fullInput;
+		commandsFile << "\n" << fullInput;
 	}
 }
 
@@ -153,6 +157,7 @@ void FileHandler::UserInput()
 
 		if (answ == 1)
 		{
+			GetFile();
 			bool isValid = true;
 			std::string fullInput;
 			std::string temperature;
@@ -204,25 +209,24 @@ void FileHandler::UserInput()
 			{
 				fullInput = "SensorName(Agricultural Sensor):Temp(" + temperature + "):Hum(" + humidity + "):Moist(" + moisture + "):Light(" + light + "):Crop(" + crop + ")";
 				AddCommand(fullInput);
-				newFile.close();
-				GetCommands();
 				std::cout << "Data Added Successfully! \n";
 			}
 			else
 			{
 				std::cout << "Invalid Input Try Again! \n";
 			}
+			commandsFile.close();
 		}
 		else if (answ == 2)
 		{
-			newFile.close();
+			commandsFile.close();
 			GetCommands();
 			std::cout << std::endl;
 			dashboardPointer->parseData();
 		}
 		else if (answ == 3)
 		{
-			newFile.close();
+			commandsFile.close();
 			isInputing = false;
 		}
 	}
