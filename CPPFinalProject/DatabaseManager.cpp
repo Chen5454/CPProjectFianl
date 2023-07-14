@@ -8,8 +8,11 @@ DatabaseManager::DatabaseManager()
 
 void DatabaseManager::GetFile()
 {
-	std::fstream FILE("JsonData.txt");
-	dataFile.open("JsonData.txt",std::ios::out);
+	if (!dataFile.is_open())
+	{
+		std::fstream FILE("JsonData.txt");
+		dataFile.open("JsonData.txt", std::ios::out);
+	}
 }
 
 void DatabaseManager::writeData(std::string data)
@@ -27,4 +30,3 @@ void DatabaseManager::ClosedFile()
 	dataFile.close();
 	//std::cout << "Closed File" << std::endl;
 }
-	
